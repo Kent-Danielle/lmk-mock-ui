@@ -32,7 +32,10 @@ export default function JoinScreen({ goBack, error, setError, loading, setLoadin
         <span className="wordmark" style={{ fontSize: 20 }}>lmk</span>
       </div>
       <div className="screen-content" style={{ paddingTop: 16 }}>
-        <h1 className="t-heading mb-xl">Join a session</h1>
+        <h1 className="t-heading mb-sm">Join a session</h1>
+        <p className="t-body text-muted mb-xl">
+          New here? Pick any name. Coming back? Use the same name you joined with.
+        </p>
         {error && <div className="error-msg">{error}</div>}
         <form onSubmit={handleJoin}>
           <div className="form-group">

@@ -6,7 +6,6 @@ import LandingScreen from './screens/LandingScreen'
 import CreateScreen from './screens/CreateScreen'
 import SessionCreatedScreen from './screens/SessionCreatedScreen'
 import JoinScreen from './screens/JoinScreen'
-import RejoinScreen from './screens/RejoinScreen'
 import QuestionsScreen from './screens/QuestionsScreen'
 import WaitingScreen from './screens/WaitingScreen'
 import GeneratingScreen from './screens/GeneratingScreen'
@@ -146,7 +145,7 @@ function App() {
 
       <div className={screenClass('session-created')}>
         <SessionCreatedScreen
-          joinLink={joinLink} sessionId={sessionId} participantId={participantId}
+          joinLink={joinLink}
           loading={loading} error={error} showToast={showToast}
           onContinueToQuestions={handleContinueToQuestions}
         />
@@ -154,17 +153,6 @@ function App() {
 
       <div className={screenClass('join')}>
         <JoinScreen
-          goBack={goBack}
-          error={error} setError={setError}
-          loading={loading} setLoading={setLoading}
-          setSessionInfo={setSessionInfo} setSessionId={setSessionId}
-          setParticipantId={setParticipantId} setIsHost={setIsHost}
-          routeToState={routeToState}
-        />
-      </div>
-
-      <div className={screenClass('rejoin')}>
-        <RejoinScreen
           goBack={goBack}
           error={error} setError={setError}
           loading={loading} setLoading={setLoading}

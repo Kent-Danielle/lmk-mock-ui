@@ -39,8 +39,7 @@ export default function WaitingScreen({ isHost, sessionId, participantId, error,
         </button>
       )}
       <p className="t-caption text-faint" style={{ marginTop: 'auto' }}>
-        Session: {sessionId}<br />
-        You: {participantId} {isHost ? '(host)' : '(participant)'}
+        {isHost ? 'You are the host' : 'You are a participant'}
       </p>
     </div>
   )

@@ -20,7 +20,6 @@ export default function LandingScreen({ goTo }) {
       <div className="btn-stack" style={{ maxWidth: 400, margin: '0 auto', width: '100%' }}>
         <button className="btn btn-primary" onClick={() => goTo('create')}>Host a Session</button>
         <button className="btn btn-outline" onClick={() => goTo('join')}>Join a Session</button>
-        <button className="btn btn-ghost" onClick={() => goTo('rejoin')}>Rejoin Session</button>
       </div>
     </div>
   )
