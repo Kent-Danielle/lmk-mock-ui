@@ -1,5 +1,7 @@
 import { api } from '../api'
 
+const UUID_RE = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i
+
 export default function RejoinScreen({ goBack, error, setError, loading, setLoading, setSessionInfo, setSessionId, setParticipantId, setIsHost, routeToState }) {
   const handleRejoin = async (e) => {
     e.preventDefault()
@@ -8,6 +10,11 @@ export default function RejoinScreen({ goBack, error, setError, loading, setLoad
     const form = new FormData(e.target)
     const linkId = form.get('link_id').trim()
     const pid = form.get('participant_id').trim()
+    if (!UUID_RE.test(pid)) {
+      setError('Participant ID must be a valid UUID (e.g. 5607a507-18a3-4d64-9862-bff1d2bc9395)')
+      setLoading(false)
+      return
+    }
     try {
       const info = await api('GET', `/sessions/link/${linkId}`)
       setSessionInfo(info)
