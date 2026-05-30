@@ -302,6 +302,16 @@
   text-align: center;
 }
 
+.slider-labels {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;          /* matches the input's full width */
+  margin-top: -16px;    /* pulls it closer to the slider, offsetting the gap */
+  font-size: 0.75rem;
+  color: var(--color-primary);
+  opacity: 0.5;
+}
+
 input[type="range"] {
   -webkit-appearance: none;
   appearance: none;

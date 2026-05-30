@@ -22,18 +22,19 @@ export default function QuestionsScreen({
     setAnswers((prev) => ({ ...prev, [qId]: value }))
   }
 
-  const toggleMultiSelect = (qId, optionId) => {
+  const toggleMultiSelect = (qId, optionValue) => {
     setAnswers((prev) => {
       const current = prev[qId] || []
-      const next = current.includes(optionId)
-        ? current.filter((id) => id !== optionId)
-        : [...current, optionId]
+      const next = current.includes(optionValue)
+        ? current.filter((id) => id !== optionValue)
+        : [...current, optionValue]
       return { ...prev, [qId]: next }
     })
   }
 
   // Serialize answers to the shape the backend expects:
   //   TEXT        -> string
+  //   SWIPE       -> string
   //   MULTISELECT -> array of option ids
   //   SLIDER      -> { value: number }
   const serializeForBackend = (question, raw) => {
@@ -81,12 +82,12 @@ export default function QuestionsScreen({
           {currentQuestion.options.map((opt, i) => (
             <div
               key={opt.id}
-              className={`multi-option ${(answers[currentQuestion.id] || []).includes(opt.id) ? 'selected' : ''}`}
+              className={`multi-option ${(answers[currentQuestion.id] || []).includes(opt.label) ? 'selected' : ''}`}
               style={{
                 background: optionColors[i % optionColors.length],
                 color: i >= 3 ? 'var(--color-text)' : '#fff',
               }}
-              onClick={() => toggleMultiSelect(currentQuestion.id, opt.id)}
+              onClick={() => toggleMultiSelect(currentQuestion.id, opt.label)}
             >
               <div className="multi-check" style={i >= 3 ? { borderColor: 'rgba(0,0,0,0.2)' } : {}} />
               <span>{opt.label}</span>
@@ -106,6 +107,10 @@ export default function QuestionsScreen({
             style={{ '--slider-pct': `${answers[currentQuestion.id] ?? 50}%` }}
             onChange={(e) => updateAnswer(currentQuestion.id, parseInt(e.target.value))}
           />
+          <div className="slider-labels">
+            <span>{currentQuestion.options[0]?.label || 0}</span>
+            <span>{currentQuestion.options[1]?.label || 100}</span>
+          </div>
         </div>
       )}
 
@@ -116,6 +121,17 @@ export default function QuestionsScreen({
           value={answers[currentQuestion.id] || ''}
           onChange={(e) => updateAnswer(currentQuestion.id, e.target.value)}
         />
+      )}
+
+      {currentQuestion.mechanic === 'SWIPE' && (
+        <div className="multi-options mb-xl">
+          <textarea
+            className="textarea mb-xl"
+            placeholder={`Type your answer ${currentQuestion.options[0].label} or ${currentQuestion.options[1].label}...`}
+            value={answers[currentQuestion.id] || ''}
+            onChange={(e) => updateAnswer(currentQuestion.id, e.target.value)}
+          />
+        </div>
       )}
 
       {error && <div className="error-msg">{error}</div>}
